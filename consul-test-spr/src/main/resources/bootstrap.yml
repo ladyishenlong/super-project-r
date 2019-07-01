@@ -1,0 +1,26 @@
+server:
+  port: 5001
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: consul-test-sqr
+  cloud:
+    consul:
+      host: localhost #配置consul地址
+      port: 8500 #配置consul端口
+      config:
+        #prefix: config #基本配置文件，默认config
+        enabled: true #启动配置中心
+        format: yaml #配置文件格式
+        data-key: data #配置文件的名字
+
+      discovery:
+        enabled: true
+        register: true
+        deregister: true
+        health-check-path: /actuator/health
+
+
+

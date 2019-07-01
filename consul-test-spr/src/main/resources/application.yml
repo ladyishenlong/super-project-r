@@ -1,0 +1,6 @@
+server:
+  port: 5001
+
+spring:
+  application:
+    name: consul-test-sqr
