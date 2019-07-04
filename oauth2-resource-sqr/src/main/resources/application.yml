@@ -1,0 +1,15 @@
+server:
+  port: 5004
+spring:
+  application:
+    name: oauth2-resource-spr
+
+security:
+  oauth2:
+    client:
+      client-id: 123
+      client-secret: 123
+      access-token-uri: http://localhost:5002/oauth/token
+      user-authorization-uri: http://localhost:5002/oauth/authorize
+    resource:
+      token-info-uri: http://localhost:5002/oauth/check_token

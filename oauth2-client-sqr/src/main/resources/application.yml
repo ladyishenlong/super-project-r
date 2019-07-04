@@ -1,0 +1,5 @@
+server:
+  port: 5003
+spring:
+  application:
+    name: oauth2-client-sqr

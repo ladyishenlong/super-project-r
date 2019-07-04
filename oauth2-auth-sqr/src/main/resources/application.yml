@@ -1,0 +1,11 @@
+server:
+  port: 5002
+
+spring:
+  application:
+    name: oauth2-auth-sqr
+
+  security:
+    user:
+      name: 123
+      password: 123

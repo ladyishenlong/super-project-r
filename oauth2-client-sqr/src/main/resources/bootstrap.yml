@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+
+---
+
+server:
+  port: 5003
+spring:
+  profiles:
+    active: dev
+  application:
+    name: oauth2-client-sqr
+  cloud:
+    consul:
+      host: localhost #配置consul地址
+      port: 8500 #配置consul端口
