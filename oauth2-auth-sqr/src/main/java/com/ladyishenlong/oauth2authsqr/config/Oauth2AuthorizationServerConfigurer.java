@@ -14,14 +14,18 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @Configuration
 @EnableAuthorizationServer //授权服务器
 public class Oauth2AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
+
+
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
+
+
         clients.inMemory()
                 .withClient("123")
                 .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123")) //客户端 id/secret
                 .authorizedGrantTypes("authorization_code","refresh_token") //授权码模式
                 .scopes("all")
-                .redirectUris("http://localhost:5004/getCode")
+//                .redirectUris("http://localhost:5004/getCode")
                 .autoApprove(true) //自动审批
                 .accessTokenValiditySeconds(36000)//有效期10hour
         ;
