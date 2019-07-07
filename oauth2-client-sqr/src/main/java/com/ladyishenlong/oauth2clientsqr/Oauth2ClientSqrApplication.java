@@ -5,8 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- *
  * 客户访问的服务器
+ *
+ * 与资源服务器和授权服务器不在同一个注册中心
+ *
  */
 @EnableDiscoveryClient
 @SpringBootApplication

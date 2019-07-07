@@ -11,6 +11,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * 同样需要加入actuator检测健康状态
  *
  * consul使用docker部署集群
+ *
+ *  参考 https://www.jianshu.com/p/7487ef33ab8a
  */
 @EnableDiscoveryClient
 @SpringBootApplication
