@@ -56,6 +56,7 @@ public class HelloController {
 
     /**
      * todo 这里已经获得了code，但是token有没有用还不知道
+     * 请求参考了https://www.oschina.net/question/4116241_2305351
      *
      * @return
      */
