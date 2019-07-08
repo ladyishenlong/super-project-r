@@ -25,11 +25,13 @@ public class RestTemplateConfig {
         return new RestTemplate(simpleClientHttpRequestFactory());
     }
 
+
     private ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         HttpClient httpClient = HttpClientBuilder.create()
-                .setRedirectStrategy(new LaxRedirectStrategy())
+                .setRedirectStrategy(new BanRedirectStrategy())
                 .build();
+
         factory.setHttpClient(httpClient);
         factory.setConnectTimeout(15000);
         factory.setReadTimeout(5000);

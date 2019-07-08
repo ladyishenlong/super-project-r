@@ -105,6 +105,9 @@ public class HelloController {
         String username = "123";
         String password = "123";
 
+
+
+
 //        HashMap<String, String> param = new HashMap<>();
 //        param.put("client_id", "123");
 //        param.put("response_type", "code");
@@ -116,6 +119,16 @@ public class HelloController {
 //                restTemplate.getForEntity(url, String.class);
 //
 //        log.info("请求结果：" + result.getStatusCode());
+
+
+
+
+
+
+
+
+
+
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("client_id", "123");
         params.put("response_type", "code");
