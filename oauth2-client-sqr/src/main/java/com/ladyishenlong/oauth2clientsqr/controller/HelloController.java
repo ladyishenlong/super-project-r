@@ -52,7 +52,7 @@ public class HelloController {
      * @return
      */
     @GetMapping("/getCode")
-    public String getCode(@RequestParam("code") String code) throws Exception {
+    public ResponseEntity getCode(@RequestParam("code") String code) throws Exception {
         log.info("验证码：{}", code);
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -83,7 +83,8 @@ public class HelloController {
 
         HttpHeaders header2 = new HttpHeaders();
         header2.set("Authorization", "Bearer " + token);
-        String result = restTemplate.getForObject("http://localhost:5004/getResource?access_token="+token, String.class);
+        ResponseEntity result = restTemplate.exchange(
+                "http://localhost:5004/getResource", HttpMethod.GET ,new HttpEntity<String>(null, header2),String.class);
 
         log.info("获取资源的结果：{}", result);
         return result;

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * @Author ruanchenhao
  * @Date 2019-07-01 13:24
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceController {
 
     @GetMapping("/getResource")
-    public String getResource() {
-        return "获取资源";
+    public String getResource(Principal principal) {
+        return "获取资源"+principal.getName();
     }
 
 
