@@ -14,28 +14,21 @@ import org.springframework.web.client.RestTemplate;
  * @Author ruanchenhao
  * @Date 2019-07-05 09:20
  * <p>
- * RestTemplate 配置好才能注入
+ * RestTemplate 配置的全局配置
  */
 @Configuration
 public class RestTemplateConfig {
 
-
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate(simpleClientHttpRequestFactory());
-    }
-
-
-    private ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         HttpClient httpClient = HttpClientBuilder.create()
                 .setRedirectStrategy(new BanRedirectStrategy())
                 .build();
-
         factory.setHttpClient(httpClient);
         factory.setConnectTimeout(15000);
         factory.setReadTimeout(5000);
-        return factory;
+        return new RestTemplate(factory);
     }
 
 }
