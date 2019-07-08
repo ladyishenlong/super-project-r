@@ -1,5 +1,7 @@
 package com.ladyishenlong.oauth2clientsqr.controller;
 
+
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.swing.text.html.parser.Entity;
 import javax.xml.ws.Response;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -48,14 +52,45 @@ public class HelloController {
      * @return
      */
     @GetMapping("/getCode")
-    public String getCode(@RequestParam("code") String code) {
+    public String getCode(@RequestParam("code") String code) throws Exception {
         log.info("验证码：{}", code);
-        return code;
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("code", code);
+        params.add("client_id", "123");
+        params.add("client_secret", "123");
+        params.add("redirect_uri", "http://localhost:5003/getCode");
+        params.add("scope", "all");
+
+        HttpHeaders header = new HttpHeaders();
+        header.set("Content-Type", "multipart/form-data");
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity =
+                new HttpEntity<>(params, header);
+
+        ResponseEntity<String> request = restTemplate.
+                postForEntity("http://localhost:5002/oauth/token",
+                        requestEntity, String.class);
+
+
+        log.info("token结果：" + request);
+        log.info("请求结果：{}", request.getBody());
+
+        String token = new JsonParser().parse(request.getBody()).
+                getAsJsonObject().get("access_token").getAsString();
+        log.info("----token：{}----", token);
+
+        HttpHeaders header2 = new HttpHeaders();
+        header2.set("Authorization", "Bearer " + token);
+        String result = restTemplate.getForObject("http://localhost:5004/getResource?access_token="+token, String.class);
+
+        log.info("获取资源的结果：{}", result);
+        return result;
     }
 
 
     /**
-     * todo 这里已经获得了code，但是token有没有用还不知道
      * 请求参考了https://www.oschina.net/question/4116241_2305351
      *
      * @return
@@ -147,7 +182,7 @@ public class HelloController {
      *
      * @return
      */
-    @GetMapping("/getResource")
+    @PostMapping("/getResource")
     public String getResource() {
         return restTemplate.getForObject("http://localhost:5004/getResource", String.class);
     }
