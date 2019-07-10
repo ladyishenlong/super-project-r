@@ -43,6 +43,9 @@ public class UserController {
     /**
      * 前端接入的登录接口
      *
+     * 需要改为post请求，传入用户名和密码
+     *
+     *
      * @throws Exception
      */
     @GetMapping("/login")
@@ -146,9 +149,9 @@ public class UserController {
         String token = new JsonParser().parse(tokenResult.getBody()).
                 getAsJsonObject().get("access_token").getAsString();
 
-        log.info("---- token：{} ----", token);
+        log.info("---- access_token：{} ----", token);
 
-        //访问资源服务，验证登录效果
+        //访问资源服务，仅仅能用来验证登录效果
         HttpHeaders resourceHeader = new HttpHeaders();
         resourceHeader.set("Authorization", "Bearer " + token);
 

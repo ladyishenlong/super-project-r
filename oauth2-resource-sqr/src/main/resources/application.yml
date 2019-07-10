@@ -5,7 +5,7 @@ spring:
     name: oauth2-resource-spr
 
 
-#配置oauth2的地址，通过地址进行身份验证
+#配置oauth2的地址，通过地址进行身份验证，如果设置错误或者不设置，会导致无法验证
 security:
   oauth2:
     client:
