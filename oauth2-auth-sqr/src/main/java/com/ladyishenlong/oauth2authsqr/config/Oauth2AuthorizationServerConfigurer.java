@@ -19,22 +19,12 @@ public class Oauth2AuthorizationServerConfigurer extends AuthorizationServerConf
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 
-
         clients.inMemory()
                 .withClient("123")
                 .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123")) //客户端 id/secret
                 .authorizedGrantTypes("authorization_code", "refresh_token") //授权码模式
                 .scopes("all")
-                .redirectUris("http://localhost:5003/getCode")
-                .autoApprove(true) //自动审批
-                .accessTokenValiditySeconds(36000)//有效期10hour
-
-                .and()
-                .withClient("234")
-                .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("234")) //客户端 id/secret
-                .authorizedGrantTypes("authorization_code", "refresh_token") //授权码模式
-                .scopes("all")
-                .redirectUris("https://baidu.com")
+                .redirectUris("http://localhost:5003/user/code")
                 .autoApprove(true) //自动审批
                 .accessTokenValiditySeconds(36000)//有效期10hour
         ;

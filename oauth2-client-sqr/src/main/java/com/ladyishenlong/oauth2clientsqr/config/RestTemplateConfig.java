@@ -21,9 +21,11 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate() {
+
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         HttpClient httpClient = HttpClientBuilder.create()
-                .setRedirectStrategy(new BanRedirectStrategy())
+                //允许所有请求的重定向
+                .setRedirectStrategy(new LaxRedirectStrategy())
                 .build();
         factory.setHttpClient(httpClient);
         factory.setConnectTimeout(15000);

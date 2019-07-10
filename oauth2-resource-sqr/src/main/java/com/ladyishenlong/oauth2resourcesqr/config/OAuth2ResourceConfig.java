@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * @Date 2019-07-01 14:48
  *
  */
-//@EnableOAuth2Sso //添加这个注解才会跳转到授权服务器
+@EnableOAuth2Sso //添加这个注解才会跳转到授权服务器
 @Configuration
 @EnableResourceServer//资源服务器
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)

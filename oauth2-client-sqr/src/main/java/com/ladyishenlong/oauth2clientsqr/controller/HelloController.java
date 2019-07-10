@@ -51,45 +51,46 @@ public class HelloController {
      * @param code
      * @return
      */
-    @GetMapping("/getCode")
-    public ResponseEntity getCode(@RequestParam("code") String code) throws Exception {
-        log.info("验证码：{}", code);
-
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "authorization_code");
-        params.add("code", code);
-        params.add("client_id", "123");
-        params.add("client_secret", "123");
-        params.add("redirect_uri", "http://localhost:5003/getCode");
-        params.add("scope", "all");
-
-        HttpHeaders header = new HttpHeaders();
-        header.set("Content-Type", "multipart/form-data");
-
-        HttpEntity<MultiValueMap<String, String>> requestEntity =
-                new HttpEntity<>(params, header);
-
-        ResponseEntity<String> request = restTemplate.
-                postForEntity("http://localhost:5002/oauth/token",
-                        requestEntity, String.class);
-
-
-        log.info("token结果：" + request);
-        log.info("请求结果：{}", request.getBody());
-
-        String token = new JsonParser().parse(request.getBody()).
-                getAsJsonObject().get("access_token").getAsString();
-        log.info("----token：{}----", token);
-
-        HttpHeaders header2 = new HttpHeaders();
-        header2.set("Authorization", "Bearer " + token);
-        ResponseEntity result = restTemplate.exchange(
-                "http://localhost:5004/getResource", HttpMethod.GET ,new HttpEntity<String>(null, header2),String.class);
-
-        log.info("获取资源的结果：{}", result);
-        return result;
-    }
-
+//    @GetMapping("/getCode")
+//    public ResponseEntity getCode(@RequestParam("code") String code) throws Exception {
+//        log.info("验证码：{}", code);
+//
+//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+//        params.add("grant_type", "authorization_code");
+//        params.add("code", code);
+//        params.add("client_id", "123");
+//        params.add("client_secret", "123");
+//        params.add("redirect_uri", "http://localhost:5003/getCode");
+//        params.add("scope", "all");
+//
+//        HttpHeaders header = new HttpHeaders();
+//        header.set("Content-Type", "multipart/form-data");
+//
+//        HttpEntity<MultiValueMap<String, String>> requestEntity =
+//                new HttpEntity<>(params, header);
+//
+//        ResponseEntity<String> request = restTemplate.
+//                postForEntity("http://localhost:5002/oauth/token",
+//                        requestEntity, String.class);
+//
+//
+//        log.info("token结果：" + request);
+//        log.info("请求结果：{}", request.getBody());
+//
+//        String token = new JsonParser().parse(request.getBody()).
+//                getAsJsonObject().get("access_token").getAsString();
+//        log.info("----token：{}----", token);
+//
+//        HttpHeaders header2 = new HttpHeaders();
+//        header2.set("Authorization", "Bearer " + token);
+//        ResponseEntity result = restTemplate.exchange(
+//                "http://localhost:5004/getResource", HttpMethod.GET ,new HttpEntity<String>(null, header2),String.class);
+//
+//        log.info("获取资源的结果：{}", result);
+//
+//        return result;
+//    }
+//
 
     /**
      * 请求参考了https://www.oschina.net/question/4116241_2305351
@@ -99,14 +100,11 @@ public class HelloController {
     @GetMapping("/login")
     public String login() throws Exception {
 
-        String oauthUrl = "http://localhost:5002/oauth/authorize?client_id=123&response_type=code&redirect_uri=http://localhost:5003/getCode";
+        String oauthUrl = "http://localhost:5002/oauth/authorize";
         String loginUrl = "http://localhost:5002/login";
 
         String username = "123";
         String password = "123";
-
-
-
 
 //        HashMap<String, String> param = new HashMap<>();
 //        param.put("client_id", "123");
@@ -119,15 +117,6 @@ public class HelloController {
 //                restTemplate.getForEntity(url, String.class);
 //
 //        log.info("请求结果：" + result.getStatusCode());
-
-
-
-
-
-
-
-
-
 
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("client_id", "123");
