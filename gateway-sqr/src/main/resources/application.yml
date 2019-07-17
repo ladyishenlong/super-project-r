@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes: # 负载均衡 路由代理
+        - id: consul-test-sqr  # 服务name
+          uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
+          predicates:
+            - Method=GET
