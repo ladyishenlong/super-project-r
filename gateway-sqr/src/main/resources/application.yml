@@ -9,3 +9,5 @@ spring:
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:
             - Method=GET
+          filters:
+            - GatewayDemoFilterFactory=true
