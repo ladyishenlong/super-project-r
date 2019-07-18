@@ -8,6 +8,26 @@ spring:
         - id: consul-test-sqr  # 服务name
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:
-            - Method=GET
+            - Method=GET,POST
+
+          # 参考了 http://www.ityouknow.com/springcloud/2019/01/26/spring-cloud-gateway-limit.html
           filters:
-            - GatewayDemoFilterFactory=true
+            - name: GatewayDemoFilterFactory # 自定义过滤器
+            - name: Retry # 重试配置
+              args:
+                retries: 3 #重试次数
+                statuses: BAD_GATEWAY #状态返回码
+            - name: Hystrix # 熔断器配置 需要添加熔断器依赖
+                args:
+                  name: fallbackcmd
+                  fallbackUri: forward:/gatewayHystrix
+
+#            - name: RequestRateLimiter # 限流配置
+
+
+
+
+
+
+
+
