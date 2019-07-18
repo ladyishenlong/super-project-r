@@ -21,9 +21,9 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 //放行登录和身份验证接口
-//                .antMatchers("/login").permitAll()
 //                .antMatchers("/oauth/**").permitAll()
 //                .antMatchers("/getCode").permitAll()
 //                .and()

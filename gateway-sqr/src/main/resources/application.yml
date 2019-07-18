@@ -19,6 +19,24 @@ spring:
 
 
       routes: # 负载均衡 路由代理
+
+        - id: oauth2-resource-spr
+          uri: lb://oauth2-resource-spr
+          predicates:
+            - Path=/oauth2resource/**  #请求路径带上该前缀
+            - Method=GET,POST
+          filters:
+            - StripPrefix=1 #与path配饰使用，转发去除前缀
+
+        - id: oauth2-client-sqr
+          uri: lb://oauth2-client-sqr
+          predicates:
+            - Path=/oauth2client/**  #请求路径带上该前缀
+            - Method=GET,POST
+          filters:
+            - StripPrefix=1 #与path配饰使用，转发去除前缀
+
+
         - id: consul-test-sqr  # 服务name
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:
@@ -41,6 +59,8 @@ spring:
       #                key-resolver: '#{@ipKeyResolver}'
       #                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速度
       #                redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+
+
 
 
 
