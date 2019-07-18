@@ -1,4 +1,9 @@
 spring:
+  redis:
+    host: localhost
+    port: 6378
+    timeout: 36000
+    database: 0
   cloud:
     gateway:
       discovery:
@@ -9,7 +14,6 @@ spring:
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:
             - Method=GET,POST
-
           # 参考了 http://www.ityouknow.com/springcloud/2019/01/26/spring-cloud-gateway-limit.html
           filters:
             - name: GatewayDemoFilterFactory # 自定义过滤器
@@ -18,11 +22,14 @@ spring:
                 retries: 3 #重试次数
                 statuses: BAD_GATEWAY #状态返回码
             - name: Hystrix # 熔断器配置 需要添加熔断器依赖
-                args:
-                  name: fallbackcmd
-                  fallbackUri: forward:/gatewayHystrix
-
-#            - name: RequestRateLimiter # 限流配置
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/gatewayHystrix
+            - name: RequestRateLimiter # 限流配置 依赖于redis
+              args:
+                key-resolver: '#{@ipKeyResolver}'
+                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速度
+                redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
 
 
 
