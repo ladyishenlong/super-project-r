@@ -15,6 +15,7 @@ import java.security.Principal;
 @RestController
 public class ResourceController {
 
+
     @GetMapping("/getResource")
     public String getResource(Principal principal) {
         return "获取资源"+principal.getName();

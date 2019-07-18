@@ -8,14 +8,25 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: true #服务中心根据 service id 创建路由
+
+      default-filters: #全局默认的filters配置
+        - name: RequestRateLimiter # 限流配置 依赖于redis 限流返回状态码429
+          args:
+            key-resolver: '#{@ipKeyResolver}'
+            redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速度
+            redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+
+
       routes: # 负载均衡 路由代理
         - id: consul-test-sqr  # 服务name
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:
+            - Path=/consultest/**  #请求路径带上该前缀
             - Method=GET,POST
           # 参考了 http://www.ityouknow.com/springcloud/2019/01/26/spring-cloud-gateway-limit.html
           filters:
+            - StripPrefix=1 #与path配饰使用，转发去除前缀
             - name: GatewayDemoFilterFactory # 自定义过滤器
             - name: Retry # 重试配置
               args:
@@ -25,11 +36,15 @@ spring:
               args:
                 name: fallbackcmd
                 fallbackUri: forward:/gatewayHystrix
-            - name: RequestRateLimiter # 限流配置 依赖于redis
-              args:
-                key-resolver: '#{@ipKeyResolver}'
-                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速度
-                redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+      #            - name: RequestRateLimiter # 限流配置 依赖于redis 限流返回状态码429
+      #              args:
+      #                key-resolver: '#{@ipKeyResolver}'
+      #                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速度
+      #                redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+
+
+
+
 
 
 
