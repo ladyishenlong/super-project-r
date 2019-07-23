@@ -1,0 +1,24 @@
+server:
+  port: 5007
+spring:
+  application:
+    name: admin-client-sqr
+  boot:
+    admin:
+      client:
+        url: http://localhost:5006
+
+
+#配置暴露端点才能在admin页面上显示所有信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+logging:
+  path: ./logs

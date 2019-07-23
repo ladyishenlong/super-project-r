@@ -36,7 +36,6 @@ spring:
           filters:
             - StripPrefix=1 #与path配饰使用，转发去除前缀
 
-
         - id: consul-test-sqr  # 服务name
           uri: lb://consul-test-sqr # lb:// 注册中心上的服务name
           predicates:

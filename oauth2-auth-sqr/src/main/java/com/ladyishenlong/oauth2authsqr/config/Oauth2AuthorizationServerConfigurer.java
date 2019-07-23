@@ -18,7 +18,6 @@ public class Oauth2AuthorizationServerConfigurer extends AuthorizationServerConf
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-
         clients.inMemory()
                 .withClient("123")
                 .secret(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123")) //客户端 id/secret
